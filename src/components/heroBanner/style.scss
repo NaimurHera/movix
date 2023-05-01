@@ -1,0 +1,109 @@
+@import "../../mixins.scss";
+
+.heroBanner {
+  width: 100%;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: var(--black);
+  @include md {
+    height: 700px;
+  }
+  .backdrop-img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.5;
+    overflow: hidden;
+    .lazy-load-image-background {
+      width: 100%;
+      height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+  .gradient-layer {
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(180deg, #04152d00, #04152d);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  .bannerContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #fff;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    .title {
+      font-size: 50px;
+      font-weight: 700;
+      @include md {
+        font-size: 90px;
+        margin-bottom: 0;
+      }
+    }
+    .subTitle {
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 30px;
+      @include md {
+        font-size: 18px;
+      }
+    }
+    .searchInput {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 800px;
+      form {
+        width: 100%;
+        input {
+          width: calc(100% - 100px);
+          height: 50px;
+          background-color: #fff;
+          border: none;
+          outline: none;
+          border-radius: 30px 0 0 30px;
+          padding: 0 15px;
+          color: var(--black);
+          font-size: 14px;
+          @include md {
+            font-size: 20px;
+            width: calc(100% - 150px);
+            height: 60px;
+            padding: 0 30px;
+          }
+        }
+        button {
+          width: 100px;
+          height: 50px;
+          padding: 10px;
+          text-align: center;
+          border: none;
+          outline: none;
+          background: var(--gradient);
+          font-size: 14px;
+          color: #fff;
+          cursor: pointer;
+          border-radius: 0 30px 30px 0;
+          @include md {
+            height: 60px;
+            width: 150px;
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+}
