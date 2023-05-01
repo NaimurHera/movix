@@ -46,10 +46,11 @@
     text-align: center;
     position: relative;
     .title {
-      font-size: 50px;
-      font-weight: 700;
+      font-size: 40px;
+      font-weight: 500;
       @include md {
         font-size: 90px;
+        font-weight: 700;
         margin-bottom: 0;
       }
     }

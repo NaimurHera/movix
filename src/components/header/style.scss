@@ -1,0 +1,155 @@
+@import "../../mixins.scss";
+
+header {
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 0px;
+  display: flex;
+  transition: 0.4s;
+  justify-content: center;
+  background-color: #00000020;
+  backdrop-filter: blur(3px);
+  &.show {
+    top: 0;
+    background-color: #00000080;
+  }
+  &.hidden {
+    top: -70px;
+  }
+  &.top {
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    .logo {
+      max-width: 150px;
+      width: 100%;
+      img {
+        width: 100%;
+      }
+    }
+    .mobileMenu {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #fff;
+      @include md {
+        display: none;
+      }
+    }
+    .navMenu.show {
+      visibility: visible;
+      opacity: 1;
+      top: 0;
+    }
+    .navMenu {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      flex-direction: column;
+      position: absolute;
+      left: 0;
+      top: -100px;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.4s;
+      width: 100%;
+      padding: 5rem;
+      padding-left: 3rem;
+      height: 100vh;
+      background: #fff;
+      color: #000;
+      @include md {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        height: auto;
+        background: transparent;
+        align-items: center;
+        justify-content: end;
+        padding: 0;
+        opacity: 1;
+        visibility: visible;
+      }
+
+      li.closeIcon {
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        font-size: 24px;
+        cursor: pointer;
+        line-height: 0.5;
+        padding: 5px;
+        display: block;
+        @include md {
+          position: static;
+          padding: 0;
+          display: none;
+        }
+      }
+
+      .menuItems {
+        color: var(--black);
+        font-weight: 400;
+        font-size: 24px;
+        padding: 5px;
+        cursor: pointer;
+        line-height: 0.5;
+        a {
+          text-decoration: none;
+          color: var(--black);
+          @include md {
+            color: #fff;
+          }
+        }
+        @include md {
+          color: #fff;
+          font-size: 18px;
+        }
+      }
+    }
+    .mobileSearch.show {
+      bottom: -60px;
+      visibility: visible;
+      opacity: 1;
+    }
+    .mobileSearch {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      left: 0;
+      bottom: -40px;
+      z-index: 99;
+      width: 100%;
+      background: #fff;
+      padding: 10px;
+      padding-right: 15px;
+      justify-content: space-between;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.4s;
+      input {
+        border: none;
+        outline: none;
+        padding: 10px;
+        font-size: 16px;
+        width: 90%;
+      }
+      span {
+        line-height: 0.5;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 22px;
+        color: var(--black);
+      }
+    }
+  }
+}

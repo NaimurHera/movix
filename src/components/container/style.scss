@@ -1,7 +1,17 @@
-// CSS
+@import "../../mixins.scss";
+
 .container {
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  @include sm {
+    max-width: 600px;
+  }
+  @include lg {
+    max-width: 991px;
+  }
+
+  @include xl {
+    max-width: 1200px;
+  }
 }
