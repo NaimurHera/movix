@@ -28,9 +28,15 @@ const Footer = () => {
           pariatur.
         </div>
         <div className="socialIcons">
-          <span className="icon">
-            <FaFacebookF />
-          </span>
+          <a
+            href="https://www.facebook.com/NaimurHera/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="icon">
+              <FaFacebookF />
+            </span>
+          </a>
           <span className="icon">
             <FaInstagram />
           </span>

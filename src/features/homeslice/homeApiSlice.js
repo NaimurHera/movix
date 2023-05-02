@@ -14,6 +14,12 @@ const homeApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getlatest: builder.query({
+      query: ({ media_type, endpoint }) => ({
+        url: `/${media_type}/${endpoint}`,
+        method: "GET",
+      }),
+    }),
     getTopRated: builder.query({
       query: ({ media_type, endpoint }) => ({
         url: `/${media_type}/${endpoint}`,
@@ -48,4 +54,5 @@ export const {
   useGetGenresQuery,
   useGetPopularQuery,
   useGetTopRatedQuery,
+  useGetlatestQuery,
 } = homeApiSlice;

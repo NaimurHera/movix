@@ -3,6 +3,7 @@ import Popular from "./popular/Popular";
 import "./style.scss";
 import TopRated from "./top rated/TopRated";
 import Trending from "./trending/Trending";
+import UpcomingMovies from "./upcoming movies/upcomingMovies";
 export default function Home() {
   return (
     <div className="homePage">
@@ -10,6 +11,7 @@ export default function Home() {
       <Trending />
       <Popular />
       <TopRated />
+      <UpcomingMovies />
     </div>
   );
 }
