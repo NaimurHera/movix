@@ -1,0 +1,11 @@
+.genres {
+  gap: 5px;
+  .genre {
+    background-color: var(--orange);
+    color: #fff;
+    padding: 8px;
+    font-size: 12px;
+    border-radius: 3px;
+    line-height: 0.5;
+  }
+}

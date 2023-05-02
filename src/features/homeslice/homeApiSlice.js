@@ -8,14 +8,44 @@ const homeApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getPopular: builder.query({
+      query: ({ media_type, endpoint }) => ({
+        url: `/${media_type}/${endpoint}`,
+        method: "GET",
+      }),
+    }),
+    getTopRated: builder.query({
+      query: ({ media_type, endpoint }) => ({
+        url: `/${media_type}/${endpoint}`,
+        method: "GET",
+      }),
+    }),
     getApiConfiguration: builder.query({
       query: () => ({
         url: `/configuration`,
         method: "GET",
       }),
     }),
+    getTrendingMovies: builder.query({
+      query: (endpoint) => ({
+        url: `/trending/all/${endpoint}`,
+        method: "GET",
+      }),
+    }),
+    getGenres: builder.query({
+      query: (media) => ({
+        url: `/genre/${media}/list`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetMoviesByCategoryQuery, useGetApiConfigurationQuery } =
-  homeApiSlice;
+export const {
+  useGetTrendingMoviesQuery,
+  useGetMoviesByCategoryQuery,
+  useGetApiConfigurationQuery,
+  useGetGenresQuery,
+  useGetPopularQuery,
+  useGetTopRatedQuery,
+} = homeApiSlice;

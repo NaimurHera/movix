@@ -1,0 +1,23 @@
+@import "../../mixins.scss";
+
+.trendingSection {
+  padding: 50px 0;
+  position: relative;
+  .contentWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    .carouselTitle {
+      color: #fff;
+      font-size: 20px;
+      text-align: left;
+      font-weight: normal;
+      @include md {
+        font-size: 24px;
+      }
+    }
+  }
+}

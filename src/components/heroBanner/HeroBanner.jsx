@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import bannerImg from "../../assets/banner-placeholder.jpg";
 import {
   useGetApiConfigurationQuery,
   useGetMoviesByCategoryQuery,
@@ -13,7 +14,8 @@ import "./style.scss";
 export default function HeroBanner() {
   const navigate = useNavigate();
   const searchInput = useRef();
-  const { data: upcomingMovies } = useGetMoviesByCategoryQuery("/upcoming");
+  const { data: upcomingMovies, isError } =
+    useGetMoviesByCategoryQuery("/upcoming");
 
   const { backdrop } = useSelector((state) => state.url);
   const { data: Apiconfiguration } = useGetApiConfigurationQuery();
@@ -43,12 +45,17 @@ export default function HeroBanner() {
       navigate(`/search/${searchValue}`);
     }
   };
-
   return (
     <div className="heroBanner">
       {backdrop && (
         <div className="backdrop-img">
           <LazyImg src={backdrop} />
+        </div>
+      )}
+      {/* adding local banner image if there is any error occured  */}
+      {!backdrop && isError && (
+        <div className="backdrop-img">
+          <LazyImg src={bannerImg} />
         </div>
       )}
       <div className="gradient-layer"></div>
