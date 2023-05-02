@@ -104,12 +104,12 @@ export default function Header() {
               <SlMenu />
             </span>
           </div>
-          <div className={`mobileSearch ${showSearch && "show"}`}>
+          <form className={`mobileSearch ${showSearch && "show"}`}>
             <input type="text" placeholder="Search for movie or tv shows.." />
             <span onClick={handleSearch}>
               <CgClose />
             </span>
-          </div>
+          </form>
         </div>
       </Container>
     </header>

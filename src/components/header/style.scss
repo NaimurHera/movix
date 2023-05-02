@@ -19,8 +19,6 @@ header {
   &.hidden {
     top: -70px;
   }
-  &.top {
-  }
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -103,7 +101,14 @@ header {
         padding: 5px;
         cursor: pointer;
         line-height: 0.5;
+
+        &:hover {
+          a {
+            color: var(--pink);
+          }
+        }
         a {
+          transition: 0.4s;
           text-decoration: none;
           color: var(--black);
           @include md {
