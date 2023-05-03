@@ -1,6 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 
-const homeApiSlice = apiSlice.injectEndpoints({
+export const homeApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getMoviesByCategory: builder.query({
       query: (category) => ({
@@ -14,12 +14,37 @@ const homeApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
-    getlatest: builder.query({
-      query: ({ media_type, endpoint }) => ({
-        url: `/${media_type}/${endpoint}`,
+    getMoreUpcomingMovies: builder.query({
+      query: ({ category, page }) => ({
+        url: `/movie/${category}?page=${page}`,
         method: "GET",
       }),
+      async onQueryStarted({ category }, { queryFulfilled, dispatch }) {
+        try {
+          // updating the cach data pessimastically start
+          const { data: upcomingMovies } = await queryFulfilled;
+          if (upcomingMovies) {
+            dispatch(
+              apiSlice.util.updateQueryData(
+                "getMoviesByCategory",
+                category,
+                (draft) => {
+                  // push the new movies to the old movies array
+                  return {
+                    ...draft,
+                    results: [...draft.results, ...upcomingMovies.results],
+                  };
+                }
+              )
+            );
+          }
+          // updating the cach data pessimastically end
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
+
     getTopRated: builder.query({
       query: ({ media_type, endpoint }) => ({
         url: `/${media_type}/${endpoint}`,
@@ -54,5 +79,4 @@ export const {
   useGetGenresQuery,
   useGetPopularQuery,
   useGetTopRatedQuery,
-  useGetlatestQuery,
 } = homeApiSlice;
