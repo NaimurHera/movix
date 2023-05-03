@@ -21,6 +21,7 @@ export default function UpcomingMovies() {
   const { poster } = useSelector((state) => state.url);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const skeletonItem = () => {
@@ -37,6 +38,7 @@ export default function UpcomingMovies() {
 
   const handleShowmore = () => {
     setPage((prevpage) => prevpage + 1);
+    setLoading(true);
   };
 
   useEffect(() => {
@@ -51,11 +53,13 @@ export default function UpcomingMovies() {
           category: "upcoming",
           page,
         })
-      );
+      ).then(() => {
+        setLoading(false);
+      });
     }
   }, [page, dispatch, hasMore, upcomingMovies?.total_pages]);
   return (
-    <section className="trendingSection">
+    <section className="upcomingSection">
       <Container>
         <div className="contentWrapper">
           <h4 className="carouselTitle">Upcoming Movies</h4>
@@ -89,8 +93,12 @@ export default function UpcomingMovies() {
             })}
             {/* show the button below if there is more video  */}
             {hasMore && (
-              <button onClick={handleShowmore} className="show-more-btn">
-                Show more
+              <button
+                disabled={loading}
+                onClick={handleShowmore}
+                className="show-more-btn"
+              >
+                {loading ? "Loading movies..." : "Show more"}
               </button>
             )}
             {/* show the text below if there is no more video  */}

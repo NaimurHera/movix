@@ -1,126 +1,190 @@
 @import "../../../mixins.scss";
 
-.upcomingMovies {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 20px 10px;
-  flex-wrap: wrap;
-  @include md {
-    gap: 40px 20px;
+.upcomingSection {
+  padding: 50px 0;
+  position: relative;
+  .contentWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    .carouselTitle {
+      color: #fff;
+      font-size: 20px;
+      text-align: left;
+      font-weight: normal;
+      @include md {
+        font-size: 24px;
+      }
+    }
   }
-  .upcomingMovie {
-    width: 100px;
-    cursor: pointer;
+  .upcomingMovies {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px 10px;
+    flex-wrap: wrap;
     @include md {
-      width: calc(25% - 15px);
+      gap: 40px 20px;
     }
-    @include lg {
-      width: calc(20% - 16px);
-    }
-    flex-shrink: 0;
-    .posterBlock {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1.5;
-      background-size: cover;
-      background-position: center;
-      margin-bottom: 30px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      padding: 10px;
-      .lazy-load-image-background {
-        position: absolute;
-        top: 0;
-        left: 0;
+    .upcomingMovie {
+      width: 100px;
+      cursor: pointer;
+      @include md {
+        width: calc(25% - 15px);
+      }
+      @include lg {
+        width: calc(20% - 16px);
+      }
+      flex-shrink: 0;
+      .posterBlock {
+        position: relative;
         width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        overflow: hidden;
-        img {
+        aspect-ratio: 1 / 1.5;
+        background-size: cover;
+        background-position: center;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding: 10px;
+        .lazy-load-image-background {
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
           height: 100%;
-          object-fit: cover;
-          object-position: center;
+          border-radius: 12px;
+          overflow: hidden;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+          }
         }
-      }
-      .circleRating {
-        width: 30px;
-        height: 30px;
-        position: relative;
-        top: 20px;
-        background-color: white;
-        flex-shrink: 0;
-        @include md {
-          width: 40px;
-          height: 40px;
+        .circleRating {
+          width: 30px;
+          height: 30px;
           position: relative;
-          top: 30px;
+          top: 20px;
+          background-color: white;
+          flex-shrink: 0;
+          @include md {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            top: 30px;
+          }
+          @include lg {
+            width: 50px;
+            height: 50px;
+          }
         }
-        @include lg {
-          width: 50px;
-          height: 50px;
+        .genres {
+          display: none;
+          position: relative;
+          @include lg {
+            display: flex;
+            flex-flow: wrap;
+            justify-content: flex-end;
+          }
         }
       }
-      .genres {
-        display: none;
-        position: relative;
-        @include lg {
-          display: flex;
-          flex-flow: wrap;
-          justify-content: flex-end;
+      .textBlock {
+        color: white;
+        display: flex;
+        flex-direction: column;
+        .title {
+          font-size: 14px;
+          margin-bottom: 5px;
+          line-height: 1;
+          -webkit-line-clamp: 2;
+          @include ellipsis(1);
+          @include md {
+            font-size: 20px;
+            margin-bottom: 10px;
+          }
+        }
+        .date {
+          font-size: 12px;
+          opacity: 0.5;
+          font-weight: 300;
+          @include md {
+            font-size: 14px;
+            font-weight: 500;
+          }
         }
       }
     }
-    .textBlock {
-      color: white;
-      display: flex;
-      flex-direction: column;
-      .title {
-        font-size: 14px;
-        margin-bottom: 5px;
-        line-height: 1;
-        -webkit-line-clamp: 2;
-        @include ellipsis(1);
-        @include md {
-          font-size: 20px;
+    .show-more-btn {
+      width: 100%;
+      display: block;
+      border: none;
+      outline: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 400;
+      background-color: var(--black2);
+      transition: all 0.4s;
+      &:hover {
+        background-color: var(--black3);
+      }
+    }
+    .no-more-videos {
+      display: block;
+      width: 100%;
+      font-size: 16px;
+      text-align: center;
+      color: #fff;
+      font-weight: 400;
+    }
+  }
+
+  .loadingSkeleton {
+    display: flex;
+    gap: 10px;
+    margin-right: -20px;
+    margin-left: -20px;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    @include md {
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+    .skeletonItem {
+      width: 125px;
+      @include md {
+        width: calc(25% - 15px);
+      }
+      @include lg {
+        width: calc(20% - 16px);
+      }
+      flex-shrink: 0;
+      .posterBlock {
+        border-radius: 12px;
+        width: 100%;
+        aspect-ratio: 1 / 1.5;
+        margin-bottom: 30px;
+      }
+      .textBlock {
+        display: flex;
+        flex-direction: column;
+        .title {
+          width: 100%;
+          height: 20px;
           margin-bottom: 10px;
         }
-      }
-      .date {
-        font-size: 12px;
-        opacity: 0.5;
-        font-weight: 300;
-        @include md {
-          font-size: 14px;
-          font-weight: 500;
+        .date {
+          width: 75%;
+          height: 20px;
         }
       }
     }
-  }
-  .show-more-btn {
-    width: 100%;
-    display: block;
-    border: none;
-    outline: none;
-    color: #fff;
-    cursor: pointer;
-    padding: 10px;
-    font-size: 16px;
-    font-weight: 400;
-    background-color: var(--black2);
-    transition: all 0.4s;
-    &:hover {
-      background-color: var(--black3);
-    }
-  }
-  .no-more-videos {
-    display: block;
-    width: 100%;
-    font-size: 16px;
-    text-align: center;
-    color: #fff;
-    font-weight: 400;
   }
 }
