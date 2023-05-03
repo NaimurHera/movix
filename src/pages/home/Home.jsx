@@ -3,7 +3,7 @@ import Popular from "./popular/Popular";
 import "./style.scss";
 import TopRated from "./top rated/TopRated";
 import Trending from "./trending/Trending";
-import UpcomingMovies from "./upcoming movies/upcomingMovies";
+import UpcomingMovies from "./upcoming-movies/UpcomingMovies";
 export default function Home() {
   return (
     <div className="homePage">
