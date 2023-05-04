@@ -7,7 +7,12 @@ import Carousel from "../../../components/carousel/Carousel";
 import "../style.scss";
 export default function TopRated() {
   const [media, setMedia] = useState("movie");
-  const { data: topRatedMovies, isLoading } = useGetTopRatedQuery({
+  const {
+    data: topRatedMovies,
+    isLoading,
+    isError,
+    error,
+  } = useGetTopRatedQuery({
     media_type: media,
     endpoint: "top_rated",
   });
@@ -23,6 +28,8 @@ export default function TopRated() {
           <SwitchTabs data={["Movies", "TV shows"]} onTabChange={onTabChange} />
         </div>
         <Carousel
+          isError={isError}
+          error={error}
           media={media}
           data={topRatedMovies?.results}
           isLoading={isLoading}

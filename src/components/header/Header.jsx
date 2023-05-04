@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/movix-logo.svg";
 import Container from "../container/Container";
 import "./style.scss";
@@ -12,6 +12,8 @@ export default function Header() {
   const [lastScroll, setLastScroll] = useState();
   const [visibleHeader, setVisibleHeader] = useState("top");
   const location = useLocation();
+  const navigate = useNavigate();
+  const searchInput = useRef();
 
   useEffect(() => {
     //always scroll to the top whenever we navigate through pages
@@ -22,6 +24,15 @@ export default function Header() {
     setShowMenu(!showMenu);
     if (showSearch) {
       setShowSearch(false);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowSearch(!showSearch);
+    const searchValue = searchInput.current.value;
+    if (searchValue.length > 0) {
+      navigate(`/search/${searchValue}`);
     }
   };
 
@@ -104,8 +115,15 @@ export default function Header() {
               <SlMenu />
             </span>
           </div>
-          <form className={`mobileSearch ${showSearch && "show"}`}>
-            <input type="text" placeholder="Search for movie or tv shows.." />
+          <form
+            onSubmit={handleSubmit}
+            className={`mobileSearch ${showSearch && "show"}`}
+          >
+            <input
+              ref={searchInput}
+              type="text"
+              placeholder="Search for movie or tv shows.."
+            />
             <span onClick={handleSearch}>
               <CgClose />
             </span>

@@ -14,6 +14,18 @@ export const homeApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getSimilar: builder.query({
+      query: ({ media_type, id }) => ({
+        url: `/${media_type}/${id}/similar`,
+        method: "GET",
+      }),
+    }),
+    getRecommendations: builder.query({
+      query: ({ media_type, id }) => ({
+        url: `/${media_type}/${id}/recommendations`,
+        method: "GET",
+      }),
+    }),
     getDetails: builder.query({
       query: ({ media_type, id }) => ({
         url: `/${media_type}/${id}`,
@@ -101,4 +113,6 @@ export const {
   useGetDetailsQuery,
   useGetMediaVideosQuery,
   useGetCreditsQuery,
+  useGetSimilarQuery,
+  useGetRecommendationsQuery,
 } = homeApiSlice;
