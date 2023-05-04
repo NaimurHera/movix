@@ -1,8 +1,12 @@
 // import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
+import { useGetApiConfigurationQuery } from "./features/homeslice/homeApiSlice";
+import { setUrl } from "./features/homeslice/urlSlice";
 import PageNotFound from "./pages/404/pageNotFound";
 import Details from "./pages/details/Details";
 import Explore from "./pages/explore/Explore";
@@ -10,6 +14,20 @@ import Home from "./pages/home/Home";
 import SearchResult from "./pages/search result/SearchResult";
 
 function App() {
+  const { data: Apiconfiguration } = useGetApiConfigurationQuery();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // set the url to the state so that we can use it at any page
+    if (Apiconfiguration?.images) {
+      const url = {
+        profile: Apiconfiguration?.images?.secure_base_url + "original",
+        poster: Apiconfiguration?.images?.secure_base_url + "original",
+        backdrop: Apiconfiguration?.images?.secure_base_url + "original",
+      };
+      dispatch(setUrl(url));
+    }
+  }, [Apiconfiguration, dispatch]);
+
   return (
     <>
       <BrowserRouter>

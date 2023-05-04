@@ -1,12 +1,8 @@
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRef } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import bannerImg from "../../assets/banner-placeholder.jpg";
-import {
-  useGetApiConfigurationQuery,
-  useGetMoviesByCategoryQuery,
-} from "../../features/homeslice/homeApiSlice";
-import { setUrl } from "../../features/homeslice/urlSlice";
+import { useGetMoviesByCategoryQuery } from "../../features/homeslice/homeApiSlice";
 import Container from "../container/Container";
 import { LazyImg } from "../lazyImage/LazyImg";
 import "./style.scss";
@@ -18,26 +14,14 @@ export default function HeroBanner() {
     useGetMoviesByCategoryQuery("/upcoming");
 
   const { backdrop } = useSelector((state) => state.url);
-  const { data: Apiconfiguration } = useGetApiConfigurationQuery();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    // getting a random background url from the upcoming movies
-    const bg =
-      upcomingMovies?.results[
-        Math.floor(Math.random() * upcomingMovies?.results.length)
-      ].backdrop_path;
-    // setting the backdrop state with apiconfig and random url
-    if (bg) {
-      const url = {
-        profile: Apiconfiguration?.images?.secure_base_url + "original",
-        poster: Apiconfiguration?.images?.secure_base_url + "original",
-        backdrop: Apiconfiguration?.images?.secure_base_url + "original" + bg,
-      };
-      dispatch(setUrl(url));
-    }
-  }, [upcomingMovies, Apiconfiguration, dispatch]);
-
+  // getting a random background url from the upcoming movies
+  const bg =
+    upcomingMovies?.results[
+      Math.floor(Math.random() * upcomingMovies?.results.length)
+    ].backdrop_path;
+  // setting the backdrop state with apiconfig and random url
+  console.log(backdrop + bg);
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = searchInput.current.value;
@@ -49,13 +33,13 @@ export default function HeroBanner() {
     <div className="heroBanner">
       {backdrop && (
         <div className="backdrop-img">
-          <LazyImg src={backdrop} />
+          <LazyImg className={"heroBannerImg"} src={backdrop + bg} />
         </div>
       )}
       {/* adding local banner image if there is any error occured  */}
       {!backdrop && isError && (
         <div className="backdrop-img">
-          <LazyImg src={bannerImg} />
+          <LazyImg className={"heroBannerImg"} src={bannerImg} />
         </div>
       )}
       <div className="gradient-layer"></div>
