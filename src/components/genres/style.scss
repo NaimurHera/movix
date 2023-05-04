@@ -1,4 +1,6 @@
 .genres {
+  display: flex;
+  flex-wrap: wrap;
   gap: 5px;
   .genre {
     background-color: var(--orange);

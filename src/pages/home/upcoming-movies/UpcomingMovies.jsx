@@ -79,7 +79,7 @@ export default function UpcomingMovies() {
                 >
                   <div className="posterBlock">
                     <LazyImg src={posterUrl} />
-                    <CircleRating rating={itm?.vote_average?.toFixed(1)} />
+                    <CircleRating rating={itm?.vote_average.toFixed(1)} />
                     <Genres genreIds={itm?.genre_ids} />
                   </div>
                   <div className="textBlock">
