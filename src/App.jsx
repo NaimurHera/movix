@@ -11,7 +11,7 @@ import PageNotFound from "./pages/404/pageNotFound";
 import Details from "./pages/details/Details";
 import Explore from "./pages/explore/Explore";
 import Home from "./pages/home/Home";
-import SearchResult from "./pages/search result/SearchResult";
+import SearchResults from "./pages/searchResults/SearchResults";
 
 function App() {
   const { data: Apiconfiguration } = useGetApiConfigurationQuery();
@@ -35,7 +35,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/:mediaType/:id" element={<Details />} />
-          <Route path="/search/:query" element={<SearchResult />} />
+          <Route path="/search/:query" element={<SearchResults />} />
           <Route path="/explore/:mediaType" element={<Explore />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
