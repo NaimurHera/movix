@@ -1,6 +1,6 @@
 import Carousel from "../../../components/carousel/Carousel";
 import Container from "../../../components/container/Container";
-import { useGetSimilarQuery } from "../../../features/homeslice/homeApiSlice";
+import { useGetSimilarQuery } from "../../../features/detailsSlice/detailsApiSlice";
 
 const Similar = ({ mediaType, id }) => {
   const { data, isLoading, error, isError } = useGetSimilarQuery({

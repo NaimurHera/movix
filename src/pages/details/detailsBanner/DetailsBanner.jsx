@@ -10,7 +10,7 @@ import Genres from "../../../components/genres/Genres";
 import { LazyImg } from "../../../components/lazyImage/LazyImg";
 import { PlayIcon } from "../../../components/playBtn/PlayIcon";
 import VideoPopup from "../../../components/video popup/VideoPopup";
-import { useGetDetailsQuery } from "../../../features/homeslice/homeApiSlice";
+import { useGetDetailsQuery } from "../../../features/detailsSlice/detailsApiSlice";
 export default function DetailsBanner({ video, crews }) {
   const { backdrop, poster, profile } = useSelector((state) => state.url);
   const { mediaType, id } = useParams();

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import {
   useGetCreditsQuery,
   useGetMediaVideosQuery,
-} from "../../features/homeslice/homeApiSlice";
+} from "../../features/detailsSlice/detailsApiSlice";
 import Cast from "./cast/Cast";
 import DetailsBanner from "./detailsBanner/DetailsBanner";
 import Recommendation from "./recomendation/Recomendation";

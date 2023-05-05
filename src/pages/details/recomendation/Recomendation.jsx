@@ -1,6 +1,6 @@
 import Carousel from "../../../components/carousel/Carousel";
 import Container from "../../../components/container/Container";
-import { useGetRecommendationsQuery } from "../../../features/homeslice/homeApiSlice";
+import { useGetRecommendationsQuery } from "../../../features/detailsSlice/detailsApiSlice";
 
 const Recommendation = ({ mediaType, id }) => {
   const { data, isLoading, error, isError } = useGetRecommendationsQuery({
