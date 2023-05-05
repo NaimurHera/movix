@@ -22,9 +22,14 @@ export default function Header() {
 
   const handleMenu = () => {
     setShowMenu(!showMenu);
-    if (showSearch) {
-      setShowSearch(false);
-    }
+  };
+
+  const focusInput = () => {
+    // without this timeout function the input dont get focused because of the the css transition. So I added
+    // timeout to make a delay to focus. Now the focus is working
+    setTimeout(() => {
+      searchInput?.current?.focus();
+    }, 100);
   };
 
   const handleSubmit = (e) => {
@@ -59,21 +64,14 @@ export default function Header() {
 
   useEffect(() => {
     window.addEventListener("scroll", handleNavbar);
+
     return () => {
       window.removeEventListener("scroll", handleNavbar);
     };
   });
 
   return (
-    <header
-      className={`${
-        visibleHeader === "show"
-          ? "show"
-          : visibleHeader === "hidden"
-          ? "hidden"
-          : "top"
-      }`}
-    >
+    <header className={`${visibleHeader === "show" ? "show" : visibleHeader === "hidden" ? "hidden" : "top"}`}>
       <Container>
         <div className="navbar">
           <div className="logo">
@@ -99,8 +97,9 @@ export default function Header() {
             <li
               className="menuItems"
               onClick={() => {
+                handleSearch();
                 handleMenu();
-                setShowSearch(true);
+                focusInput();
               }}
             >
               <HiOutlineSearch />
@@ -108,22 +107,25 @@ export default function Header() {
           </ul>
 
           <div className="mobileMenu">
-            <span onClick={handleSearch}>
+            <span
+              onClick={() => {
+                handleSearch();
+                focusInput();
+              }}
+            >
               <HiOutlineSearch />
             </span>
-            <span onClick={handleMenu}>
+            <span
+              onClick={() => {
+                handleMenu();
+                setShowSearch(false);
+              }}
+            >
               <SlMenu />
             </span>
           </div>
-          <form
-            onSubmit={handleSubmit}
-            className={`mobileSearch ${showSearch && "show"}`}
-          >
-            <input
-              ref={searchInput}
-              type="text"
-              placeholder="Search for movie or tv shows.."
-            />
+          <form onSubmit={handleSubmit} className={`mobileSearch ${showSearch && "show"}`}>
+            <input ref={searchInput} type="text" placeholder="Search for movie or tv shows.." />
             <span onClick={handleSearch}>
               <CgClose />
             </span>

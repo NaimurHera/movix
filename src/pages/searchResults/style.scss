@@ -3,6 +3,7 @@
 .searchResultsPage {
   min-height: 700px;
   padding-top: 100px;
+  padding-bottom: 50px;
   .resultNotFound {
     font-size: 24px;
     text-align: center;
@@ -14,20 +15,6 @@
     line-height: 34px;
     color: white;
     margin-bottom: 25px;
-  }
-  .content {
-    display: flex;
-    flex-flow: row wrap;
-    gap: 10px;
-    margin-bottom: 50px;
-    @include md {
-      gap: 20px;
-    }
-    .movieCard {
-      .posterBlock {
-        margin-bottom: 20px;
-      }
-    }
   }
 
   .searchResults {
@@ -145,14 +132,16 @@
         background-color: var(--black3);
       }
     }
-    .no-more-videos {
-      display: block;
-      width: 100%;
-      font-size: 16px;
-      text-align: center;
-      color: #fff;
-      font-weight: 400;
-    }
+  }
+
+  .no-more-videos {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    text-align: center;
+    color: #fff;
+    font-weight: 400;
+    margin-top: 50px;
   }
   .error {
     text-align: center;
