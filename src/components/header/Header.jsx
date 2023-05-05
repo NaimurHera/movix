@@ -38,6 +38,7 @@ export default function Header() {
     const searchValue = searchInput.current.value;
     if (searchValue.length > 0) {
       navigate(`/search/${searchValue}`);
+      searchInput.current.value = "";
     }
   };
 
