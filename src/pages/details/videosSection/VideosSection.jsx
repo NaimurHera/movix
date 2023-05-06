@@ -26,25 +26,28 @@ const VideosSection = ({ data, loading }) => {
         <div className="sectionHeading">Official Videos</div>
         {/* if data loading then show skeleton else show content  */}
         {!loading ? (
-          <div className="videos">
-            {data?.results?.map((video) => (
-              <div
-                onClick={() => {
-                  setVideoId(video?.key);
-                  setShow(true);
-                }}
-                key={video?.id}
-                className="videoItem"
-              >
-                <div className="videoThumbnail">
-                  <LazyImg
-                    src={`https://img.youtube.com/vi/${video?.key}/mqdefault.jpg`}
-                  />
-                  <PlayIcon />
-                </div>
+          <>
+            {data?.results?.length > 0 && (
+              <div className="videos">
+                {data?.results?.map((video) => (
+                  <div
+                    onClick={() => {
+                      setVideoId(video?.key);
+                      setShow(true);
+                    }}
+                    key={video?.id}
+                    className="videoItem"
+                  >
+                    <div className="videoThumbnail">
+                      <LazyImg src={`https://img.youtube.com/vi/${video?.key}/mqdefault.jpg`} />
+                      <PlayIcon />
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            )}
+            {data?.results?.length === 0 && <div className="noVideosText">No official videos found!</div>}
+          </>
         ) : (
           <div className="videoSkeleton">
             {loadingSkeleton()}
@@ -54,12 +57,7 @@ const VideosSection = ({ data, loading }) => {
           </div>
         )}
       </Container>
-      <VideoPopup
-        show={show}
-        setShow={setShow}
-        videoId={videoId}
-        setVideoId={setVideoId}
-      />
+      <VideoPopup show={show} setShow={setShow} videoId={videoId} setVideoId={setVideoId} />
     </div>
   );
 };

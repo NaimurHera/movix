@@ -7,6 +7,7 @@ import CircleRating from "../../../components/circle rating/CircleRating";
 import Container from "../../../components/container/Container";
 import Genres from "../../../components/genres/Genres";
 import { LazyImg } from "../../../components/lazyImage/LazyImg";
+import Spinner from "../../../components/spinner/Spinner";
 import { homeApiSlice, useGetMoviesByCategoryQuery } from "../../../features/homeslice/homeApiSlice";
 import "../style.scss";
 import "./style.scss";
@@ -84,11 +85,12 @@ export default function UpcomingMovies() {
                   );
                 })}
                 {/* show the button below if there is more video  */}
-                {hasMore && (
+                {hasMore && !loading && (
                   <button disabled={loading} onClick={handleShowmore} className="show-more-btn">
-                    {loading ? "Loading movies..." : "Show more"}
+                    Show more
                   </button>
                 )}
+                {loading && <Spinner />}
                 {/* show the text below if there is no more video  */}
                 {!hasMore && <span className="no-more-videos">No more videos!</span>}
               </div>
