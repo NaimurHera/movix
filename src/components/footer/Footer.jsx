@@ -1,9 +1,4 @@
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedin,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 import Container from "../container/Container";
 import "./style.scss";
@@ -16,23 +11,17 @@ const Footer = () => {
           <li className="menuItem">Terms Of Use</li>
           <li className="menuItem">Privacy-Policy</li>
           <li className="menuItem">About</li>
-          <li className="menuItem">Blog</li>
           <li className="menuItem">FAQ</li>
         </ul>
         <div className="infoText">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
+          This web app is built using react js, RTK query and scss. You can get all kinds of movie information using
+          this app. Try searching some movie names in the search box at the very top. You will get information about
+          that movie. This web app is developed by{" "}
+          <a href="https://www.facebook.com/NaimurHera/">Md. Naimur Rahman Hira</a>, a professional front-end web
+          developer.
         </div>
         <div className="socialIcons">
-          <a
-            href="https://www.facebook.com/NaimurHera/"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="https://www.facebook.com/NaimurHera/" target="_blank" rel="noreferrer">
             <span className="icon">
               <FaFacebookF />
             </span>
