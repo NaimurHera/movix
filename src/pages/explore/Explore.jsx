@@ -30,18 +30,17 @@ const sortbyData = [
 
 export default function Explore() {
   const { mediaType: paramsMediaType } = useParams();
-  const media_Type = paramsMediaType === "movies" ? "movie" : "tv";
+  const api_media_type = paramsMediaType === "movies" ? "movie" : "tv";
   const [selectedGenres, setSelectedGenres] = useState();
   const [selectedSortBy, setSelectedSortBy] = useState();
   // const [genre, setGenre] = useState();
   const { poster } = useSelector((state) => state.url);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
-  const { data: genresData } = useGetGenresQuery(media_Type);
-  const { data: mediaData, isLoading, isError, error } = useGetDiscoverMediaQuery(media_Type);
+  const { data: genresData } = useGetGenresQuery(api_media_type);
+  const { data: mediaData, isLoading, isError, error } = useGetDiscoverMediaQuery(api_media_type);
   const [data, setData] = useState();
 
   //cutomizing genres for react select
@@ -69,7 +68,19 @@ export default function Explore() {
         delete filters.sort_by; // else remove the sort_by property from the filters object
       }
     }
+
     setPageNumber(1);
+    dispatch(
+      exploreApiSlice.endpoints.getMoreDiscoverMedia.initiate({
+        media_Type: api_media_type,
+        sort_by: filters?.sort_by,
+        with_genres: filters?.with_genres,
+        pageNumber: 1,
+      })
+    ).then((res) => {
+      setData(res?.data);
+      setHasMore(res?.data?.total_pages > pageNumber);
+    });
   };
 
   const skeletonItem = () => {
@@ -86,80 +97,38 @@ export default function Explore() {
 
   const handleShowmore = () => {
     setPageNumber((prevNumber) => prevNumber + 1);
-    setLoading(true);
   };
 
   useEffect(() => {
-    // when pageNumber is greater than 1 then get new page data and push with old data
-    if (pageNumber > 1) {
+    if (pageNumber > 1 && pageNumber < data?.total_pages) {
+      console.log(pageNumber);
       dispatch(
         exploreApiSlice.endpoints.getMoreDiscoverMedia.initiate({
-          media_Type,
-          sort_by: filters.sort_by,
-          with_genres: filters.with_genres,
+          media_Type: api_media_type,
+          sort_by: filters?.sort_by,
+          with_genres: filters?.with_genres,
           pageNumber,
         })
       ).then((res) => {
         setData((prevdata) => {
+          console.log(prevdata);
+          console.log(res?.data);
           return {
             ...prevdata,
-            results: [...prevdata.results, ...res.data.results], // push the new data with the old data
+            results: [...prevdata.results, ...res.data.results],
           };
         });
+        setHasMore(res?.data?.total_pages > res?.data?.page);
       });
     }
-
-    if (selectedSortBy || selectedGenres) {
-      dispatch(
-        exploreApiSlice.endpoints.getFilteredDiscoverMedia.initiate({
-          media_Type,
-          sort_by: filters.sort_by,
-          with_genres: filters.with_genres,
-        })
-      ).then((res) => {
-        if (res?.data?.total_pages <= pageNumber) {
-          setHasMore(false);
-        } else {
-          setHasMore(true);
-        }
-        setData(res?.data);
-      });
-    }
-  }, [pageNumber, dispatch, media_Type, selectedGenres, selectedSortBy]);
-
-  // useEffect(() => {
-  //   // whenever we make changes set the dispatched data to the data state
-  //   if (selectedSortBy || selectedGenres) {
-  //     dispatch(
-  //       exploreApiSlice.endpoints.getFilteredDiscoverMedia.initiate({
-  //         media_Type,
-  //         sort_by: filters.sort_by,
-  //         with_genres: filters.with_genres,
-  //       })
-  //     ).then((res) => {
-  //       if (res?.data?.total_pages <= pageNumber) {
-  //         setHasMore(false);
-  //       } else {
-  //         setHasMore(true);
-  //       }
-  //       setData(res?.data);
-  //     });
-  //   }
-  // }, [selectedGenres, selectedSortBy, media_Type, dispatch, pageNumber]);
+  }, [pageNumber, api_media_type, data?.total_pages, dispatch]);
 
   useEffect(() => {
-    // set the first initial data from the mediaData
+    // onload set the initial data from the api based on media type
     if (mediaData?.results) {
       setData(mediaData);
     }
-  }, [mediaData]);
-
-  useEffect(() => {
-    filters = {};
-    setSelectedGenres(null);
-    setSelectedSortBy(null);
-  }, [paramsMediaType]); // whenever paramsMediaType changes(that means we navigate to another page) empty previouse states
-
+  }, [paramsMediaType, mediaData]); // run this calback func only if mediadata or paramsMediaType change
   return (
     <>
       <div className="explorePage">
@@ -210,7 +179,11 @@ export default function Explore() {
                     {data?.results.map((itm, index) => {
                       const posterUrl = itm?.poster_path ? poster + itm?.poster_path : noPosterImg;
                       return (
-                        <div onClick={() => navigate(`/${media_Type}/${itm?.id}`)} className="mediaResult" key={index}>
+                        <div
+                          onClick={() => navigate(`/${api_media_type}/${itm?.id}`)}
+                          className="mediaResult"
+                          key={index}
+                        >
                           <div className="posterBlock">
                             <LazyImg src={posterUrl} />
                             <CircleRating rating={itm?.vote_average?.toFixed(1)} />

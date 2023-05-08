@@ -20,8 +20,9 @@ export const exploreApiSlice = apiSlice.injectEndpoints({
 
     getMoreDiscoverMedia: builder.query({
       query: ({ media_Type, sort_by, with_genres, pageNumber }) => ({
-        url: `/discover/${media_Type}?${with_genres && `with_genres=${with_genres}`}&
-        ${sort_by && `sort_by=${sort_by}`}&page=${pageNumber}`,
+        url: `/discover/${media_Type}?${with_genres && `with_genres=${with_genres}`}&${
+          sort_by && `sort_by=${sort_by}`
+        }&page=${pageNumber}`,
         method: "GET",
       }),
     }),
