@@ -42,6 +42,7 @@ export default function Explore() {
   const { data: genresData } = useGetGenresQuery(api_media_type);
   const { data: mediaData, isLoading, isError, error } = useGetDiscoverMediaQuery(api_media_type);
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
 
   //cutomizing genres for react select
   const customizedGenres = genresData?.genres?.map((genre) => {
@@ -70,6 +71,7 @@ export default function Explore() {
     }
 
     setPageNumber(1);
+    setLoading(true);
     dispatch(
       exploreApiSlice.endpoints.getMoreDiscoverMedia.initiate({
         media_Type: api_media_type,
@@ -80,6 +82,7 @@ export default function Explore() {
     ).then((res) => {
       setData(res?.data);
       setHasMore(res?.data?.total_pages > pageNumber);
+      setLoading(false);
     });
   };
 
@@ -101,7 +104,6 @@ export default function Explore() {
 
   useEffect(() => {
     if (pageNumber > 1 && pageNumber < data?.total_pages) {
-      console.log(pageNumber);
       dispatch(
         exploreApiSlice.endpoints.getMoreDiscoverMedia.initiate({
           media_Type: api_media_type,
@@ -111,8 +113,6 @@ export default function Explore() {
         })
       ).then((res) => {
         setData((prevdata) => {
-          console.log(prevdata);
-          console.log(res?.data);
           return {
             ...prevdata,
             results: [...prevdata.results, ...res.data.results],
@@ -121,14 +121,18 @@ export default function Explore() {
         setHasMore(res?.data?.total_pages > res?.data?.page);
       });
     }
+    setLoading(false);
   }, [pageNumber, api_media_type, data?.total_pages, dispatch]);
 
   useEffect(() => {
     // onload set the initial data from the api based on media type
     if (mediaData?.results) {
+      setPageNumber(1);
       setData(mediaData);
+      setLoading(true);
     }
   }, [paramsMediaType, mediaData]); // run this calback func only if mediadata or paramsMediaType change
+
   return (
     <>
       <div className="explorePage">
@@ -164,7 +168,7 @@ export default function Explore() {
           )}
 
           {/*  if the data is not loading then show the content else show skeleton */}
-          {!isLoading ? (
+          {!isLoading && !loading ? (
             <>
               {/*  if data isn't loading and there is no error then show content */}
               {!isLoading && !isError && data?.results && (
