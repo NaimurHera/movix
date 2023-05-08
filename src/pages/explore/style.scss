@@ -80,19 +80,19 @@
   }
   .loadingSkeleton {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    overflow-y: hidden;
     margin-right: -20px;
     margin-left: -20px;
     padding: 0 20px;
+    align-items: center;
     @include md {
       gap: 20px;
-      overflow: hidden;
       margin: 0;
       padding: 0;
     }
     .skeletonItem {
-      width: 125px;
+      width: 110px;
       @include md {
         width: calc(25% - 15px);
       }
