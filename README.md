@@ -3,7 +3,7 @@
 
 ## Getting Started
 
-#### Note: Node js must need to be pre installed to your machine
+#### Note: Node js must needed to be pre installed in your machine
 
 First install the dependecies
 ```bash
