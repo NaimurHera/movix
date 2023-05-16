@@ -7,16 +7,13 @@ import CircleRating from "../../../components/circle rating/CircleRating";
 import Container from "../../../components/container/Container";
 import Genres from "../../../components/genres/Genres";
 import { LazyImg } from "../../../components/lazyImage/LazyImg";
-import {
-  homeApiSlice,
-  useGetMoviesByCategoryQuery,
-} from "../../../features/homeslice/homeApiSlice";
+import Spinner from "../../../components/spinner/Spinner";
+import { homeApiSlice, useGetMoviesByCategoryQuery } from "../../../features/homeslice/homeApiSlice";
 import "../style.scss";
 import "./style.scss";
 
 export default function UpcomingMovies() {
-  const { data: upcomingMovies, isLoading } =
-    useGetMoviesByCategoryQuery("upcoming");
+  const { data: upcomingMovies, isLoading, isError, error } = useGetMoviesByCategoryQuery("upcoming");
   const navigate = useNavigate();
   const { poster } = useSelector((state) => state.url);
   const [page, setPage] = useState(1);
@@ -58,54 +55,49 @@ export default function UpcomingMovies() {
       });
     }
   }, [page, dispatch, hasMore, upcomingMovies?.total_pages]);
+
   return (
     <section className="upcomingSection">
       <Container>
         <div className="contentWrapper">
           <h4 className="carouselTitle">Upcoming Movies</h4>
         </div>
-        {!isLoading && upcomingMovies?.results ? (
-          // if the videos are not loading and upcomingMovies has results then show the upcoming movies
-          <div className="upcomingMovies">
-            {upcomingMovies?.results.map((itm) => {
-              const posterUrl = itm?.poster_path
-                ? poster + itm?.poster_path
-                : noPosterImg;
-              return (
-                <div
-                  onClick={() => navigate(`/movie/${itm?.id}`)}
-                  className="upcomingMovie"
-                  key={itm.id}
-                >
-                  <div className="posterBlock">
-                    <LazyImg src={posterUrl} />
-                    <CircleRating rating={itm?.vote_average.toFixed(1)} />
-                    <Genres genreIds={itm?.genre_ids} />
-                  </div>
-                  <div className="textBlock">
-                    <span className="title">{itm?.title || itm?.name}</span>
-                    <span className="date">
-                      {dayjs(itm?.release_date).format("MMM D,YYYY")}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-            {/* show the button below if there is more video  */}
-            {hasMore && (
-              <button
-                disabled={loading}
-                onClick={handleShowmore}
-                className="show-more-btn"
-              >
-                {loading ? "Loading movies..." : "Show more"}
-              </button>
+        {/*  if the data is not loading then show the content else show skeleton */}
+        {!isLoading ? (
+          <>
+            {/*  if data isn't loading and there is no error then show content */}
+            {!isLoading && !isError && upcomingMovies?.results && (
+              <div className="upcomingMovies">
+                {upcomingMovies?.results.map((itm) => {
+                  const posterUrl = itm?.poster_path ? poster + itm?.poster_path : noPosterImg;
+                  return (
+                    <div onClick={() => navigate(`/movie/${itm?.id}`)} className="upcomingMovie" key={itm.id}>
+                      <div className="posterBlock">
+                        <LazyImg src={posterUrl} />
+                        <CircleRating rating={itm?.vote_average.toFixed(1)} />
+                        <Genres genreIds={itm?.genre_ids} />
+                      </div>
+                      <div className="textBlock">
+                        <span className="title">{itm?.title || itm?.name}</span>
+                        <span className="date">{dayjs(itm?.release_date).format("MMM D,YYYY")}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+                {/* show the button below if there is more video  */}
+                {hasMore && !loading && (
+                  <button disabled={loading} onClick={handleShowmore} className="show-more-btn">
+                    Show more
+                  </button>
+                )}
+                {loading && <Spinner />}
+                {/* show the text below if there is no more video  */}
+                {!hasMore && <span className="no-more-videos">No more videos!</span>}
+              </div>
             )}
-            {/* show the text below if there is no more video  */}
-            {!hasMore && (
-              <span className="no-more-videos">No more videos!</span>
-            )}
-          </div>
+            {/*  if data isn't loading but there is an error occured then show the error message*/}
+            {!isLoading && isError && <div className="error">{error}</div>}
+          </>
         ) : (
           // show the skeleton preview if the videos are loading
           <div className="loadingSkeleton">

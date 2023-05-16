@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CgClose } from "react-icons/cg";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/movix-logo.svg";
 import Container from "../container/Container";
 import "./style.scss";
@@ -12,6 +12,8 @@ export default function Header() {
   const [lastScroll, setLastScroll] = useState();
   const [visibleHeader, setVisibleHeader] = useState("top");
   const location = useLocation();
+  const navigate = useNavigate();
+  const searchInput = useRef();
 
   useEffect(() => {
     //always scroll to the top whenever we navigate through pages
@@ -20,8 +22,23 @@ export default function Header() {
 
   const handleMenu = () => {
     setShowMenu(!showMenu);
-    if (showSearch) {
-      setShowSearch(false);
+  };
+
+  const focusInput = () => {
+    // without this timeout function the input dont get focused because of the the css transition. So I added
+    // timeout to make a delay to focus. Now the focus is working
+    setTimeout(() => {
+      searchInput?.current?.focus();
+    }, 100);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowSearch(!showSearch);
+    const searchValue = searchInput.current.value;
+    if (searchValue.length > 0) {
+      navigate(`/search/${searchValue}`);
+      searchInput.current.value = "";
     }
   };
 
@@ -48,21 +65,14 @@ export default function Header() {
 
   useEffect(() => {
     window.addEventListener("scroll", handleNavbar);
+
     return () => {
       window.removeEventListener("scroll", handleNavbar);
     };
   });
 
   return (
-    <header
-      className={`${
-        visibleHeader === "show"
-          ? "show"
-          : visibleHeader === "hidden"
-          ? "hidden"
-          : "top"
-      }`}
-    >
+    <header className={`${visibleHeader === "show" ? "show" : visibleHeader === "hidden" ? "hidden" : "top"}`}>
       <Container>
         <div className="navbar">
           <div className="logo">
@@ -88,8 +98,9 @@ export default function Header() {
             <li
               className="menuItems"
               onClick={() => {
+                handleSearch();
                 handleMenu();
-                setShowSearch(true);
+                focusInput();
               }}
             >
               <HiOutlineSearch />
@@ -97,15 +108,25 @@ export default function Header() {
           </ul>
 
           <div className="mobileMenu">
-            <span onClick={handleSearch}>
+            <span
+              onClick={() => {
+                handleSearch();
+                focusInput();
+              }}
+            >
               <HiOutlineSearch />
             </span>
-            <span onClick={handleMenu}>
+            <span
+              onClick={() => {
+                handleMenu();
+                setShowSearch(false);
+              }}
+            >
               <SlMenu />
             </span>
           </div>
-          <form className={`mobileSearch ${showSearch && "show"}`}>
-            <input type="text" placeholder="Search for movie or tv shows.." />
+          <form onSubmit={handleSubmit} className={`mobileSearch ${showSearch && "show"}`}>
+            <input ref={searchInput} type="text" placeholder="Search for movie or tv shows.." />
             <span onClick={handleSearch}>
               <CgClose />
             </span>

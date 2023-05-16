@@ -10,7 +10,7 @@ import Genres from "../../../components/genres/Genres";
 import { LazyImg } from "../../../components/lazyImage/LazyImg";
 import { PlayIcon } from "../../../components/playBtn/PlayIcon";
 import VideoPopup from "../../../components/video popup/VideoPopup";
-import { useGetDetailsQuery } from "../../../features/homeslice/homeApiSlice";
+import { useGetDetailsQuery } from "../../../features/detailsSlice/detailsApiSlice";
 export default function DetailsBanner({ video, crews }) {
   const { backdrop, poster, profile } = useSelector((state) => state.url);
   const { mediaType, id } = useParams();
@@ -32,10 +32,7 @@ export default function DetailsBanner({ video, crews }) {
   };
 
   const directors = crews?.filter((crew) => crew.job === "Director");
-  const writers = crews?.filter(
-    (crew) =>
-      crew.job === "Writer" || crew.job === "Screenplay" || crew.job === "Story"
-  );
+  const writers = crews?.filter((crew) => crew.job === "Writer" || crew.job === "Screenplay" || crew.job === "Story");
 
   const playVideo = () => {
     setShow(true);
@@ -58,10 +55,7 @@ export default function DetailsBanner({ video, crews }) {
                   <div className="left">
                     {/* if poster path available then show poster else show fall back img  */}
                     {mediaDetails?.poster_path ? (
-                      <LazyImg
-                        className="posterImg"
-                        src={poster + mediaDetails.poster_path}
-                      />
+                      <LazyImg className="posterImg" src={poster + mediaDetails.poster_path} />
                     ) : (
                       <div>
                         <LazyImg className="posterImg" src={fallbackPoster} />
@@ -70,17 +64,15 @@ export default function DetailsBanner({ video, crews }) {
                   </div>
                   <div className="right">
                     <div className="title">
-                      {`${mediaDetails?.name || mediaDetails?.title} ${dayjs(
-                        mediaDetails?.release_date
-                      ).format("YYYY")} `}
+                      {`${mediaDetails?.name || mediaDetails?.title} ${dayjs(mediaDetails?.release_date).format(
+                        "YYYY"
+                      )} `}
                     </div>
                     <div className="subtitle">{mediaDetails?.tagline}</div>
                     <Genres genreIds={genreIds} />
 
                     <div className="row">
-                      <CircleRating
-                        rating={mediaDetails?.vote_average.toFixed(1)}
-                      />
+                      <CircleRating rating={mediaDetails?.vote_average.toFixed(1)} />
                       <div className="playbtn" onClick={playVideo}>
                         <PlayIcon />
                         <span className="text">Watch Trailer</span>
@@ -89,35 +81,25 @@ export default function DetailsBanner({ video, crews }) {
 
                     <div className="overview">
                       <div className="heading">Overview</div>
-                      <span className="description">
-                        {mediaDetails?.overview}
-                      </span>
+                      <span className="description">{mediaDetails?.overview}</span>
                     </div>
                     <div className="info">
                       {mediaDetails?.status && (
                         <div className="infoItem">
                           <span className="text bold">Status : </span>
-                          <div className="span text">
-                            {mediaDetails?.status}
-                          </div>
+                          <div className="span text">{mediaDetails?.status}</div>
                         </div>
                       )}
                       {mediaDetails?.release_date && (
                         <div className="infoItem">
                           <span className="text bold">Release Date : </span>
-                          <div className="span text">
-                            {dayjs(mediaDetails?.release_date).format(
-                              "MMM D, YYYY"
-                            )}
-                          </div>
+                          <div className="span text">{dayjs(mediaDetails?.release_date).format("MMM D, YYYY")}</div>
                         </div>
                       )}
                       {mediaDetails?.runtime && (
                         <div className="infoItem">
                           <span className="text bold">Runtime : </span>
-                          <div className="span text">
-                            {toHoursAndMinutes(mediaDetails?.runtime)}
-                          </div>
+                          <div className="span text">{toHoursAndMinutes(mediaDetails?.runtime)}</div>
                         </div>
                       )}
                     </div>
@@ -130,15 +112,9 @@ export default function DetailsBanner({ video, crews }) {
                               <span className="profile">
                                 {/* if profile path exist then show original image else show local avatar image*/}
                                 {d?.profile_path ? (
-                                  <LazyImg
-                                    className={"profileImg"}
-                                    src={profile + d?.profile_path}
-                                  />
+                                  <LazyImg className={"profileImg"} src={profile + d?.profile_path} />
                                 ) : (
-                                  <LazyImg
-                                    className={"profileImg"}
-                                    src={avatar}
-                                  />
+                                  <LazyImg className={"profileImg"} src={avatar} />
                                 )}
                               </span>
                               <span>
@@ -159,15 +135,9 @@ export default function DetailsBanner({ video, crews }) {
                               <span className="profile">
                                 {/* if profile path exist then show original image else show local avatar image*/}
                                 {r?.profile_path ? (
-                                  <LazyImg
-                                    className={"profileImg"}
-                                    src={profile + r?.profile_path}
-                                  />
+                                  <LazyImg className={"profileImg"} src={profile + r?.profile_path} />
                                 ) : (
-                                  <LazyImg
-                                    className={"profileImg"}
-                                    src={avatar}
-                                  />
+                                  <LazyImg className={"profileImg"} src={avatar} />
                                 )}
                               </span>
                               <span>
@@ -188,22 +158,14 @@ export default function DetailsBanner({ video, crews }) {
                               <span className="profile">
                                 {/* if profile path exist then show original image else show local avatar image*/}
                                 {c?.profile_path ? (
-                                  <LazyImg
-                                    className={"profileImg"}
-                                    src={profile + c?.profile_path}
-                                  />
+                                  <LazyImg className={"profileImg"} src={profile + c?.profile_path} />
                                 ) : (
-                                  <LazyImg
-                                    className={"profileImg"}
-                                    src={avatar}
-                                  />
+                                  <LazyImg className={"profileImg"} src={avatar} />
                                 )}
                               </span>
                               <span>
                                 {c?.name}
-                                {i < mediaDetails?.created_by?.length - 1
-                                  ? ", "
-                                  : ""}
+                                {i < mediaDetails?.created_by?.length - 1 ? ", " : ""}
                               </span>
                             </div>
                           ))}
@@ -212,12 +174,7 @@ export default function DetailsBanner({ video, crews }) {
                     )}
                   </div>
                 </div>
-                <VideoPopup
-                  show={show}
-                  videoId={videoId}
-                  setShow={setShow}
-                  setVideoId={setVideoId}
-                />
+                <VideoPopup show={show} videoId={videoId} setShow={setShow} setVideoId={setVideoId} />
               </Container>
             </>
           )}

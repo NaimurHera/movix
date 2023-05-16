@@ -7,7 +7,12 @@ import Carousel from "../../../components/carousel/Carousel";
 import "../style.scss";
 export default function Popular() {
   const [media, setMedia] = useState("movie");
-  const { data: popularMovies, isLoading } = useGetPopularQuery({
+  const {
+    data: popularMovies,
+    isLoading,
+    isError,
+    error,
+  } = useGetPopularQuery({
     media_type: media,
     endpoint: "popular",
   });
@@ -23,6 +28,8 @@ export default function Popular() {
           <SwitchTabs data={["Movies", "TV shows"]} onTabChange={onTabChange} />
         </div>
         <Carousel
+          isError={isError}
+          error={error}
           media={media}
           data={popularMovies?.results}
           isLoading={isLoading}

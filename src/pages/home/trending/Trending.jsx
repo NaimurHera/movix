@@ -7,8 +7,12 @@ import Carousel from "../../../components/carousel/Carousel";
 import "../style.scss";
 export default function Trending() {
   const [endpoint, setEndpoint] = useState("day");
-  const { data: trendingMovies, isLoading } =
-    useGetTrendingMoviesQuery(endpoint);
+  const {
+    data: trendingMovies,
+    isLoading,
+    isError,
+    error,
+  } = useGetTrendingMoviesQuery(endpoint);
 
   const onTabChange = (tab) => {
     setEndpoint(tab.toLowerCase());
@@ -20,7 +24,12 @@ export default function Trending() {
           <h4 className="carouselTitle">Trending</h4>
           <SwitchTabs data={["Day", "Week"]} onTabChange={onTabChange} />
         </div>
-        <Carousel data={trendingMovies?.results} isLoading={isLoading} />
+        <Carousel
+          isError={isError}
+          error={error}
+          data={trendingMovies?.results}
+          isLoading={isLoading}
+        />
       </Container>
     </section>
   );

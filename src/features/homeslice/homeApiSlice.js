@@ -14,24 +14,6 @@ export const homeApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
-    getDetails: builder.query({
-      query: ({ media_type, id }) => ({
-        url: `/${media_type}/${id}`,
-        method: "GET",
-      }),
-    }),
-    getMediaVideos: builder.query({
-      query: ({ media_type, id }) => ({
-        url: `/${media_type}/${id}/videos`,
-        method: "GET",
-      }),
-    }),
-    getCredits: builder.query({
-      query: ({ media_type, id }) => ({
-        url: `/${media_type}/${id}/credits`,
-        method: "GET",
-      }),
-    }),
 
     getMoreUpcomingMovies: builder.query({
       query: ({ category, page }) => ({
@@ -63,7 +45,6 @@ export const homeApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
-
     getTopRated: builder.query({
       query: ({ media_type, endpoint }) => ({
         url: `/${media_type}/${endpoint}`,
@@ -98,7 +79,4 @@ export const {
   useGetGenresQuery,
   useGetPopularQuery,
   useGetTopRatedQuery,
-  useGetDetailsQuery,
-  useGetMediaVideosQuery,
-  useGetCreditsQuery,
 } = homeApiSlice;

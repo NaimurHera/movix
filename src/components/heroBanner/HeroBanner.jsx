@@ -20,8 +20,7 @@ export default function HeroBanner() {
     upcomingMovies?.results[
       Math.floor(Math.random() * upcomingMovies?.results.length)
     ].backdrop_path;
-  // setting the backdrop state with apiconfig and random url
-  console.log(backdrop + bg);
+
   const handleSearch = (e) => {
     e.preventDefault();
     const searchValue = searchInput.current.value;
