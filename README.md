@@ -21,4 +21,11 @@ yarn dev
 # or
 pnpm dev
 ```
+## Technology used to build this web app
+- [React Js](https://react.dev/)
+- [RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+- [SCSS](https://sass-lang.com/install)
+- [Vite](https://redux-toolkit.js.org/rtk-query/overview)
 
+## API provider
+- [Themoviedb](https://www.themoviedb.org/)
