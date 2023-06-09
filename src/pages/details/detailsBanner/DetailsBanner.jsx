@@ -55,7 +55,7 @@ export default function DetailsBanner({ video, crews }) {
                   <div className="left">
                     {/* if poster path available then show poster else show fall back img  */}
                     {mediaDetails?.poster_path ? (
-                      <LazyImg className="posterImg" src={poster + mediaDetails.poster_path} />
+                      <LazyImg className="posterImg" src={profile + mediaDetails.poster_path} />
                     ) : (
                       <div>
                         <LazyImg className="posterImg" src={fallbackPoster} />
@@ -112,7 +112,7 @@ export default function DetailsBanner({ video, crews }) {
                               <span className="profile">
                                 {/* if profile path exist then show original image else show local avatar image*/}
                                 {d?.profile_path ? (
-                                  <LazyImg className={"profileImg"} src={profile + d?.profile_path} />
+                                  <LazyImg className={"profileImg"} src={poster + d?.profile_path} />
                                 ) : (
                                   <LazyImg className={"profileImg"} src={avatar} />
                                 )}
@@ -135,7 +135,7 @@ export default function DetailsBanner({ video, crews }) {
                               <span className="profile">
                                 {/* if profile path exist then show original image else show local avatar image*/}
                                 {r?.profile_path ? (
-                                  <LazyImg className={"profileImg"} src={profile + r?.profile_path} />
+                                  <LazyImg className={"profileImg"} src={poster + r?.profile_path} />
                                 ) : (
                                   <LazyImg className={"profileImg"} src={avatar} />
                                 )}
@@ -158,7 +158,7 @@ export default function DetailsBanner({ video, crews }) {
                               <span className="profile">
                                 {/* if profile path exist then show original image else show local avatar image*/}
                                 {c?.profile_path ? (
-                                  <LazyImg className={"profileImg"} src={profile + c?.profile_path} />
+                                  <LazyImg className={"profileImg"} src={poster + c?.profile_path} />
                                 ) : (
                                   <LazyImg className={"profileImg"} src={avatar} />
                                 )}

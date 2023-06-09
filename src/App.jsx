@@ -20,8 +20,8 @@ function App() {
     // set the url to the state so that we can use it at any page
     if (Apiconfiguration?.images) {
       const url = {
-        profile: Apiconfiguration?.images?.secure_base_url + "original",
-        poster: Apiconfiguration?.images?.secure_base_url + "original",
+        profile: Apiconfiguration?.images?.secure_base_url + "w342",
+        poster: Apiconfiguration?.images?.secure_base_url + "w185",
         backdrop: Apiconfiguration?.images?.secure_base_url + "original",
       };
       dispatch(setUrl(url));

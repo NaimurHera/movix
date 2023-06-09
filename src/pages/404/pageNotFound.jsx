@@ -6,7 +6,7 @@ import { LazyImg } from "../../components/lazyImage/LazyImg";
 import { useGetMoviesByCategoryQuery } from "../../features/homeslice/homeApiSlice";
 import "./style.scss";
 export default function PageNotFound() {
-  const { data: upcomingMovies, isError } = useGetMoviesByCategoryQuery("/upcoming");
+  const { data: upcomingMovies } = useGetMoviesByCategoryQuery("/upcoming");
 
   const { backdrop } = useSelector((state) => state.url);
 
