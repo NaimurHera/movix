@@ -17,27 +17,12 @@ const Footer = () => {
           This web app is built using react js, RTK query and scss. You can get all kinds of movie information using
           this app. Try searching some movie names in the search box at the very top. You will get information about
           that movie. This web app is developed by{" "}
-          <a target="_blank" rel="noreferrer" href="https://www.facebook.com/NaimurHera/">
-            Md. Naimur Rahman Hira
-          </a>
-          , a professional front-end web developer.
+          <b>
+            Sandeep Kumar
+          </b>
+          , a professional Full stack web developer and UI UX designer
         </div>
-        <div className="socialIcons">
-          <a href="https://www.facebook.com/NaimurHera/" target="_blank" rel="noreferrer">
-            <span className="icon">
-              <FaFacebookF />
-            </span>
-          </a>
-          <span className="icon">
-            <FaInstagram />
-          </span>
-          <span className="icon">
-            <FaTwitter />
-          </span>
-          <span className="icon">
-            <FaLinkedin />
-          </span>
-        </div>
+        
       </Container>
     </footer>
   );
