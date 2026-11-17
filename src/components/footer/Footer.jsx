@@ -18,7 +18,7 @@ const Footer = () => {
           this app. Try searching some movie names in the search box at the very top. You will get information about
           that movie. This web app is developed by{" "}
           <b>
-            Sandeep Kumar
+            Naimur Rahman Hira
           </b>
           , a professional Full stack web developer and UI UX designer
         </div>
